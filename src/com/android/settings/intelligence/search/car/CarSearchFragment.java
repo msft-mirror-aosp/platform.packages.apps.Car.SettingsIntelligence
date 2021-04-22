@@ -199,6 +199,7 @@ public class CarSearchFragment extends PreferenceFragment implements
         String queryString = query.toString();
         mToolbar.setSearchQuery(queryString);
         onQueryTextChange(queryString);
+        hideKeyboard();
     }
 
     @Override
