@@ -267,6 +267,11 @@ public class CarSearchFragment extends PreferenceFragment implements
         mSearchFeatureProvider.searchResultClicked(getContext(), mQuery, result);
         mSavedQueryController.saveQuery(mQuery);
 
+        // Hide keyboard to apply the proper insets before the activity launches.
+        // TODO (b/187074444): remove if WindowManager updates ordering of insets such that they are
+        // applied before new activities are launched.
+        hideKeyboard();
+
         Intent intent = result.payload.getIntent();
         if (result instanceof AppSearchResult) {
             getActivity().startActivity(intent);
