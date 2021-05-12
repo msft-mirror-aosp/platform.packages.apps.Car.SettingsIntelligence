@@ -37,11 +37,11 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.ui.imewidescreen.CarUiImeSearchListItem;
 import com.android.car.ui.preference.PreferenceFragment;
 import com.android.car.ui.recyclerview.CarUiContentListItem;
+import com.android.car.ui.recyclerview.CarUiRecyclerView;
 import com.android.car.ui.toolbar.MenuItem;
 import com.android.car.ui.toolbar.Toolbar;
 import com.android.car.ui.toolbar.ToolbarController;
@@ -68,7 +68,7 @@ public class CarSearchFragment extends PreferenceFragment implements
     private SearchFeatureProvider mSearchFeatureProvider;
 
     private ToolbarController mToolbar;
-    private RecyclerView mRecyclerView;
+    private CarUiRecyclerView mRecyclerView;
 
     private String mQuery;
     private boolean mShowingSavedQuery;
@@ -76,14 +76,19 @@ public class CarSearchFragment extends PreferenceFragment implements
     private CarSearchResultsAdapter mSearchAdapter;
     private CarSavedQueryController mSavedQueryController;
 
-    private final RecyclerView.OnScrollListener mScrollListener =
-            new RecyclerView.OnScrollListener() {
+    private final CarUiRecyclerView.OnScrollListener mScrollListener =
+            new CarUiRecyclerView.OnScrollListener() {
                 @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                public void onScrolled(@NonNull CarUiRecyclerView recyclerView, int dx, int dy) {
                     if (dy != 0) {
                         hideKeyboard();
                     }
                 }
+
+                @Override
+                public void onScrollStateChanged(@NonNull CarUiRecyclerView recyclerView,
+                                                          int newState) {}
+
             };
 
     @Override
@@ -141,7 +146,7 @@ public class CarSearchFragment extends PreferenceFragment implements
             mToolbar.setShowMenuItemsWhileSearching(true);
             mToolbar.setSearchQuery(mQuery);
         }
-        mRecyclerView = getListView();
+        mRecyclerView = getCarUiRecyclerView();
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(mSearchAdapter);
             mRecyclerView.addOnScrollListener(mScrollListener);
@@ -336,8 +341,8 @@ public class CarSearchFragment extends PreferenceFragment implements
             }
         }
 
-        if (mRecyclerView != null && !mRecyclerView.hasFocus()) {
-            mRecyclerView.requestFocus();
+        if (mRecyclerView != null && !mRecyclerView.getView().hasFocus()) {
+            mRecyclerView.getView().requestFocus();
         }
     }
 }
