@@ -42,6 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.car.ui.imewidescreen.CarUiImeSearchListItem;
 import com.android.car.ui.preference.PreferenceFragment;
 import com.android.car.ui.recyclerview.CarUiContentListItem;
+import com.android.car.ui.recyclerview.CarUiRecyclerView;
 import com.android.car.ui.toolbar.MenuItem;
 import com.android.car.ui.toolbar.Toolbar;
 import com.android.car.ui.toolbar.ToolbarController;
@@ -68,7 +69,7 @@ public class CarSearchFragment extends PreferenceFragment implements
     private SearchFeatureProvider mSearchFeatureProvider;
 
     private ToolbarController mToolbar;
-    private RecyclerView mRecyclerView;
+    private CarUiRecyclerView mRecyclerView;
 
     private String mQuery;
     private boolean mShowingSavedQuery;
@@ -141,7 +142,7 @@ public class CarSearchFragment extends PreferenceFragment implements
             mToolbar.setShowMenuItemsWhileSearching(true);
             mToolbar.setSearchQuery(mQuery);
         }
-        mRecyclerView = getListView();
+        mRecyclerView = getCarUiRecyclerView();
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(mSearchAdapter);
             mRecyclerView.addOnScrollListener(mScrollListener);
@@ -336,8 +337,8 @@ public class CarSearchFragment extends PreferenceFragment implements
             }
         }
 
-        if (mRecyclerView != null && !mRecyclerView.hasFocus()) {
-            mRecyclerView.requestFocus();
+        if (mRecyclerView != null && !mRecyclerView.getView().hasFocus()) {
+            mRecyclerView.getView().requestFocus();
         }
     }
 }
