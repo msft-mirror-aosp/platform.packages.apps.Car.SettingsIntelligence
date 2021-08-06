@@ -37,7 +37,6 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.car.ui.imewidescreen.CarUiImeSearchListItem;
 import com.android.car.ui.preference.PreferenceFragment;
@@ -77,14 +76,18 @@ public class CarSearchFragment extends PreferenceFragment implements
     private CarSearchResultsAdapter mSearchAdapter;
     private CarSavedQueryController mSavedQueryController;
 
-    private final RecyclerView.OnScrollListener mScrollListener =
-            new RecyclerView.OnScrollListener() {
+    private final CarUiRecyclerView.OnScrollListener mScrollListener =
+            new CarUiRecyclerView.OnScrollListener() {
                 @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                public void onScrolled(@NonNull CarUiRecyclerView recyclerView, int dx, int dy) {
                     if (dy != 0) {
                         hideKeyboard();
                     }
                 }
+
+                @Override
+                public void onScrollStateChanged(@NonNull CarUiRecyclerView recyclerView,
+                                                          int newState) {}
             };
 
     @Override
