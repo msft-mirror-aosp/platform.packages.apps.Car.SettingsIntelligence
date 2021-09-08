@@ -43,7 +43,9 @@ import com.android.car.ui.preference.PreferenceFragment;
 import com.android.car.ui.recyclerview.CarUiContentListItem;
 import com.android.car.ui.recyclerview.CarUiRecyclerView;
 import com.android.car.ui.toolbar.MenuItem;
-import com.android.car.ui.toolbar.Toolbar;
+import com.android.car.ui.toolbar.NavButtonMode;
+import com.android.car.ui.toolbar.SearchConfig;
+import com.android.car.ui.toolbar.SearchMode;
 import com.android.car.ui.toolbar.ToolbarController;
 import com.android.settings.intelligence.R;
 import com.android.settings.intelligence.overlay.FeatureFactory;
@@ -136,12 +138,11 @@ public class CarSearchFragment extends PreferenceFragment implements
             List<MenuItem> items = getToolbarMenuItems();
             mToolbar.setTitle(getPreferenceScreen().getTitle());
             mToolbar.setMenuItems(items);
-            mToolbar.setNavButtonMode(Toolbar.NavButtonMode.BACK);
-            mToolbar.setState(Toolbar.State.SUBPAGE);
-            mToolbar.setState(Toolbar.State.SEARCH);
+            mToolbar.setNavButtonMode(NavButtonMode.BACK);
+            mToolbar.setSearchMode(SearchMode.SEARCH);
             mToolbar.setSearchHint(R.string.abc_search_hint);
-            mToolbar.registerOnSearchListener(this::onQueryTextChange);
-            mToolbar.registerOnSearchCompletedListener(this::onSearchComplete);
+            mToolbar.registerSearchListener(this::onQueryTextChange);
+            mToolbar.registerSearchCompletedListener(this::onSearchComplete);
             mToolbar.setShowMenuItemsWhileSearching(true);
             mToolbar.setSearchQuery(mQuery);
         }
@@ -219,7 +220,7 @@ public class CarSearchFragment extends PreferenceFragment implements
     public void onLoadFinished(Loader<List<? extends SearchResult>> loader,
             List<? extends SearchResult> data) {
 
-        if (mToolbar.canShowSearchResultItems()) {
+        if (mToolbar.getSearchCapabilities().canShowSearchResultItems()) {
             List<CarUiImeSearchListItem> searchItems = new ArrayList<>();
             for (SearchResult result : data) {
                 CarUiImeSearchListItem item = new CarUiImeSearchListItem(
@@ -245,7 +246,9 @@ public class CarSearchFragment extends PreferenceFragment implements
 
                 searchItems.add(item);
             }
-            mToolbar.setSearchResultItems(searchItems);
+            mToolbar.setSearchConfig(SearchConfig.builder()
+                    .setSearchResultItems(searchItems)
+                    .build());
         }
 
         mSearchAdapter.postSearchResults(data);
