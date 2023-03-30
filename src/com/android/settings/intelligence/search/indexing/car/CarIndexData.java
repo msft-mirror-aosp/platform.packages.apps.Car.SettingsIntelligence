@@ -16,6 +16,7 @@
 
 package com.android.settings.intelligence.search.indexing.car;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.android.settings.intelligence.search.indexing.DatabaseIndexingUtils;
@@ -37,7 +38,7 @@ public class CarIndexData extends IndexData {
      */
     public static class Builder extends IndexData.Builder {
         @Override
-        protected Intent buildIntent() {
+        protected Intent buildIntent(Context context) {
             return DatabaseIndexingUtils.buildDirectSearchResultIntent(getIntentAction(),
                     getIntentTargetPackage(), getIntentTargetClass(), getKey());
         }

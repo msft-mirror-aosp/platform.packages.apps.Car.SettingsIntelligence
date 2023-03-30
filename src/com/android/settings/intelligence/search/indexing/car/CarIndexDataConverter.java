@@ -16,6 +16,8 @@
 
 package com.android.settings.intelligence.search.indexing.car;
 
+import android.content.Context;
+
 import com.android.settings.intelligence.search.indexing.IndexData;
 import com.android.settings.intelligence.search.indexing.IndexDataConverter;
 import com.android.settings.intelligence.search.indexing.PreIndexData;
@@ -25,8 +27,8 @@ import com.android.settings.intelligence.search.indexing.PreIndexData;
  */
 public class CarIndexDataConverter extends IndexDataConverter {
 
-    public CarIndexDataConverter() {
-        super();
+    public CarIndexDataConverter(Context context) {
+        super(context);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class CarDatabaseIndexingManager extends DatabaseIndexingManager {
     }
 
     @Override
-    protected IndexDataConverter getIndexDataConverter() {
-        return new CarIndexDataConverter();
+    protected IndexDataConverter getIndexDataConverter(Context context) {
+        return new CarIndexDataConverter(context);
     }
 }
