@@ -19,9 +19,6 @@ package {
 android_app {
     name: "CarSettingsIntelligence",
     overrides: ["SettingsIntelligence"],
-    optimize: {
-        proguard_flags_files: ["proguard.cfg"],
-    },
     sdk_version: "system_current",
     product_specific: true,
     privileged: true,
